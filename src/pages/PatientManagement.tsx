@@ -28,7 +28,7 @@ export default function PatientManagement() {
   const [editingPatient, setEditingPatient] = useState<Patient | null>(null);
   const [newPatient, setNewPatient] = useState({
     name: '',
-    email: '',
+    email: '', 
     phone: '',
     dateOfBirth: '',
     gender: 'male' as 'male' | 'female' | 'other',

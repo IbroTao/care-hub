@@ -14,6 +14,7 @@ import Appointments from "./pages/Appointments";
 import Resources from "./pages/Resources";
 import Analytics from "./pages/Analytics";
 import NotFound from "./pages/NotFound";
+import Register from "./pages/Register";
 
 const queryClient = new QueryClient();
 
@@ -25,6 +26,12 @@ const App = () => (
         <Sonner />
         <BrowserRouter>
           <Routes>
+            <Route path="/register" element={<Login />} />
+            <Route path="/" element={
+              <ProtectedRoute>
+                <MainLayout />
+              </ProtectedRoute>
+            }></Route>
             <Route path="/login" element={<Login />} />
             <Route path="/" element={
               <ProtectedRoute>

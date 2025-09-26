@@ -12,6 +12,7 @@ export interface User {
 
 interface AuthContextType {
   user: User | null;
+  register: (username: string, email: string, password: string, confirmPassword: string) => boolean;
   login: (username: string, password: string) => boolean;
   logout: () => void;
   isAuthenticated: boolean;
@@ -45,14 +46,28 @@ const DUMMY_USERS: User[] = [
 ];
 
 const USER_CREDENTIALS = [
-  { username: 'admin', password: 'admin123' },
-  { username: 'doctor1', password: 'doctor123' },
-  { username: 'patient1', password: 'patient123' }
+  { username: 'admin', email: 'admin@harms.healthcare', password: 'admin123', confirmPassword: 'admin123' },
+  { username: 'doctor1', email: 'michael.chen@harms.healthcare', password: 'doctor123', confirmPassword: 'doctor123' },
+  { username: 'patient1', email: 'emily.rodriguez@email.com', password: 'patient123', confirmPassword: 'patient123' }
 ];
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
 
+  const register = (username: string, email: string, password: string, confirmPassword: string): boolean => {
+    const credential = USER_CREDENTIALS.find(
+      c => c.username === username && c.email === email  && c.password === password && c.confirmPassword === confirmPassword
+    );
+    
+    if (credential) {
+      const userData = DUMMY_USERS.find(u => u.username === username);
+      if (userData) {
+        setUser(userData);
+        return true;
+      }
+    }
+    return false;
+  };
   const login = (username: string, password: string): boolean => {
     const credential = USER_CREDENTIALS.find(
       c => c.username === username && c.password === password
@@ -75,6 +90,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   return (
     <AuthContext.Provider value={{
       user,
+      register,
       login,
       logout,
       isAuthenticated: !!user
