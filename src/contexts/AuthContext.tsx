@@ -24,7 +24,7 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 const DUMMY_USERS: User[] = [
   {
     id: '1',
-    username: 'admin',
+    username: 'admin1',
     name: 'Dr. Sarah Johnson',
     role: 'admin',
     email: 'admin@harms.healthcare'
