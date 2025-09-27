@@ -46,35 +46,51 @@ const DUMMY_USERS: User[] = [
 ];
 
 const USER_CREDENTIALS = [
-  { username: 'admin', email: 'admin@harms.healthcare', password: 'admin123', confirmPassword: 'admin123' },
-  { username: 'doctor1', email: 'michael.chen@harms.healthcare', password: 'doctor123', confirmPassword: 'doctor123' },
-  { username: 'patient1', email: 'emily.rodriguez@email.com', password: 'patient123', confirmPassword: 'patient123' }
+  { username: 'admin1', email: 'admin1@gmail.com', password: 'admin123', confirmPassword: 'admin123' },
+  { username: 'doctor1', email: 'doctor1@gmail.com', password: 'doctor123', confirmPassword: 'doctor123' },
+  { username: 'patient1', email: 'patient1@gmail.com', password: 'patient123', confirmPassword: 'patient123' }
 ];
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
+  const [users, setUsers] = useState<User[]>(DUMMY_USERS);
+  const [credentials, setCredentials] = useState(USER_CREDENTIALS);
 
   const register = (username: string, email: string, password: string, confirmPassword: string): boolean => {
-    const credential = USER_CREDENTIALS.find(
-      c => c.username === username && c.email === email  && c.password === password && c.confirmPassword === confirmPassword
+    // Check if username or email already exists
+    const exists = credentials.some(
+      c => c.username === username || c.email === email
     );
     
-    if (credential) {
-      const userData = DUMMY_USERS.find(u => u.username === username);
-      if (userData) {
-        setUser(userData);
-        return true;
-      }
+    if (exists) {
+      return false;
     }
-    return false;
+
+    // Create new user
+    const newId = String(users.length + 1);
+    const newName = username.charAt(0).toUpperCase() + username.slice(1);
+    const newUser: User = {
+      id: newId,
+      username,
+      name: newName,
+      role: 'patient', // Default role for new registrations
+      email
+    };
+
+    // Add to users and credentials
+    setUsers(prev => [...prev, newUser]);
+    setCredentials(prev => [...prev, { username, email, password, confirmPassword }]);
+
+    return true;
   };
+
   const login = (username: string, password: string): boolean => {
-    const credential = USER_CREDENTIALS.find(
+    const credential = credentials.find(
       c => c.username === username && c.password === password
     );
     
     if (credential) {
-      const userData = DUMMY_USERS.find(u => u.username === username);
+      const userData = users.find(u => u.username === username);
       if (userData) {
         setUser(userData);
         return true;

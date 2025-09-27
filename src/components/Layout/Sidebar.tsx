@@ -86,7 +86,7 @@ export const Sidebar = ({ collapsed, onToggle }: SidebarProps) => {
                 <Heart className="w-5 h-5 text-white" />
               </div>
               <div>
-                <h1 className="font-bold text-lg text-primary">HARMS</h1>
+                <h1 className="font-bold text-lg text-primary">ClinicHub</h1>
                 <p className="text-xs text-muted-foreground">Healthcare Admin</p>
               </div>
             </div>

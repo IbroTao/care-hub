@@ -48,7 +48,7 @@ export default function Login() {
 
   const handleDemoLogin = (role: 'admin' | 'doctor' | 'patient') => {
     const demoCredentials = {
-      admin: { username: 'admin', password: 'admin123' },
+      admin: { username: 'admin1', password: 'admin123' },
       doctor: { username: 'doctor1', password: 'doctor123' },
       patient: { username: 'patient1', password: 'patient123' }
     };
